@@ -1,20 +1,31 @@
 import { JumpFm } from 'jumpfm-api'
 
-export const load = (jumpFm: JumpFm) => {
-    const html = document.querySelector('html')
-    let fontSize = 14
+const html = document.querySelector('html')
 
+let fontSize = 14
+
+const set = () => {
     html.style.fontSize = `${fontSize}px`
+}
 
-    jumpFm.bind('fontSizeInc', ['ctrl+0'], () => {
-        html.style.fontSize = `${fontSize = 14}px`
+export const load = (jumpFm: JumpFm) => {
+    jumpFm.bind('fontSizeReset', ['ctrl+0'], () => {
+        fontSize = 14
+        console.log('fontSize', fontSize)
+        set()
     })
 
     jumpFm.bind('fontSizeInc', ['ctrl+='], () => {
-        html.style.fontSize = `${++fontSize}px`
+        fontSize += 1
+        console.log('fontSize', fontSize)
+        set()
     })
 
     jumpFm.bind('fontSizeDec', ['ctrl+-'], () => {
-        html.style.fontSize = `${--fontSize}px`
+        fontSize -= 1
+        console.log('fontSize', fontSize)
+        set()
     })
+
+    set()
 }
